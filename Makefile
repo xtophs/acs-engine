@@ -58,7 +58,7 @@ checksum:
 clean:
 	@rm -rf $(BINDIR) ./_dist
 
-test: test_fmt
+test: 
 	go test -v $(GOFILES)
 
 .PHONY: test-style
