@@ -16,6 +16,7 @@ jobs:
           paths:
             - vendor
   build:
+    working_directory: /go/src/github.com/Azure/acs-engine
     docker:
       - image: circleci/golang:1.8
     steps:
