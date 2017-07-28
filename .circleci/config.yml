@@ -1,7 +1,7 @@
 version: 2
 jobs:
-  test:
-    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+  bootstrap:
+    working_directory: /go/src/github.com/${ORG_NAME}/${REPO_NAME}
     docker:
       - image: circleci/golang:1.8
     steps:
@@ -15,9 +15,24 @@ jobs:
           key: dependency-cache-{{ checksum "glide.lock" }}
           paths:
             - vendor
+  build:
+    docker:
+      - image: circleci/golang:1.8
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "glide.lock" }}
       - run:
           name: make test
           command: make test
       - run:
           name: make coverage
           command: make coverage
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - bootstrap
+      - build:
+          requires:
+            - bootstrap
