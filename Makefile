@@ -86,7 +86,7 @@ ifndef HAS_GIT
 endif
 	glide install
 
-ci: bootstrap build test lint
+ci: build test lint
 	./scripts/coverage.sh --coveralls
 
 .PHONY: coverage
